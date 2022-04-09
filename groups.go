@@ -22,12 +22,15 @@ func newGroup(buffer []byte) group {
 
 	records := []record{}
 
-	for bytesConsumed < uint32(len(records_buffer)) {
-		r := newRecord(records_buffer[bytesConsumed:])
+	if signature != "CELL" && signature != "WRLD" && signature != "DIAL" && signature != "NPC_" {
 
-		bytesConsumed += r.size + 24
+		for bytesConsumed < uint32(len(records_buffer)) {
+			r := newRecord(records_buffer[bytesConsumed:])
 
-		records = append(records, r)
+			bytesConsumed += r.size + 24
+
+			records = append(records, r)
+		}
 	}
 
 	return group{

@@ -23,12 +23,7 @@ func main() {
 		bytesConsumed += g.size
 
 		groups = append(groups, g)
-
-		if g.signature == "WEAP" {
-			// fmt.Printf("%v\n", g.records)
-		}
 	}
-	// fmt.Printf("%v\n", len(groups))
 
 	fmt.Printf("Finished processing in %v\n", time.Since(performance))
 }
