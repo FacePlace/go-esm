@@ -1,10 +1,7 @@
 package main
 
 import (
-	"encoding/binary"
 	"fmt"
-	"github.com/google/flatbuffers/go"
-	"math"
 )
 
 func main() {
@@ -14,7 +11,17 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("%v\n", flatbuffers.GetUint8(buffer[0:1]))
-	fmt.Printf("%v\n", flatbuffers.GetUint32(buffer[4:8]))
-	fmt.Printf("%v", math.Float32frombits(binary.LittleEndian.Uint32(buffer[4:8])))
+	var bytesConsumed uint32 = 78
+	groups := []group{}
+
+	for bytesConsumed < uint32(len(buffer)) {
+		g := newGroup(buffer[bytesConsumed:])
+
+		bytesConsumed += g.size
+
+		groups = append(groups, g)
+
+		fmt.Printf("%v\n", g)
+	}
+	fmt.Printf("%v\n", len(groups))
 }
