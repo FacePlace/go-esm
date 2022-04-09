@@ -6,7 +6,7 @@ type group struct {
 	s_type    string
 	size      uint32
 	signature string
-	// contents  string
+	records   []record
 }
 
 func newGroup(buffer []byte) group {
@@ -16,12 +16,25 @@ func newGroup(buffer []byte) group {
 	size := flatbuffers.GetUint32(header[4:8])
 	signature := string(header[8:12])
 
-	// contents := buffer[24:size]
+	records_buffer := buffer[24:size]
+
+	bytesConsumed := uint32(0)
+
+	records := []record{}
+
+	for bytesConsumed < uint32(len(records_buffer)) {
+		r := newRecord(records_buffer[bytesConsumed:])
+
+		bytesConsumed += r.size + 24
+
+		records = append(records, r)
+	}
 
 	return group{
 		s_type:    s_type,
 		size:      size,
 		signature: signature,
+		records:   records,
 		// contents:  string(contents),
 	}
 }

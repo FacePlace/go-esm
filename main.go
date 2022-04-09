@@ -2,9 +2,12 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
+	performance := time.Now()
+
 	buffer, err := readEsm("data/Skyrim/Skyrim.esm")
 
 	if err != nil {
@@ -21,7 +24,11 @@ func main() {
 
 		groups = append(groups, g)
 
-		fmt.Printf("%v\n", g)
+		if g.signature == "WEAP" {
+			// fmt.Printf("%v\n", g.records)
+		}
 	}
-	fmt.Printf("%v\n", len(groups))
+	// fmt.Printf("%v\n", len(groups))
+
+	fmt.Printf("Finished processing in %v\n", time.Since(performance))
 }
