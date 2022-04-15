@@ -6,17 +6,17 @@ type Group struct {
 	Type      string
 	Size      uint32
 	Signature string
-	records   []Record
+	Records   []Record
 }
 
 type Record struct {
 	Type       string
 	Size       uint32
-	subrecords []Subrecord
+	Subrecords []Subrecord
 }
 
 type Subrecord struct {
 	Type   string
 	Size   uint16
-	buffer []byte
+	Buffer string
 }
